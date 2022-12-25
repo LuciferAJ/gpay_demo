@@ -1,6 +1,6 @@
 # gpay_demo
 
-A new Flutter project.
+Demo Project for Gpay Payment Screen
 
 ## Getting Started
 
@@ -14,3 +14,7 @@ A few resources to get you started if this is your first Flutter project:
 For help getting started with Flutter development, view the
 [online documentation](https://docs.flutter.dev/), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
+
+
+https://user-images.githubusercontent.com/25266736/209472524-b4e72aeb-a71b-4c00-b1d4-393f19d142a4.mov
+
