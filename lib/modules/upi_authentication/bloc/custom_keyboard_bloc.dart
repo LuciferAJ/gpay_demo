@@ -8,6 +8,7 @@ part 'custom_keyboard_state.dart';
 class CustomKeyboardBloc
     extends Bloc<CustomKeyboardEvent, CustomKeyboardState> {
   CustomKeyboardBloc() : super(InitialKeyState()) {
+    // Listen and emit the Digit state
     on<DigitEvent>((event, emit) {
       switch (event.digit) {
         case "1":
@@ -43,6 +44,8 @@ class CustomKeyboardBloc
         default:
       }
     });
+
+    // Listen and emit the Action state
     on<ActionEvent>((event, emit) {
       if (event.action == "erase") {
         emit(EraseState(event.action));

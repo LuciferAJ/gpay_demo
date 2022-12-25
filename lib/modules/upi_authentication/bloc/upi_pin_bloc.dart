@@ -13,23 +13,27 @@ class UpiPinBloc extends Bloc<UpiPinEvent, UpiPinState> {
   BuildContext context;
   final List<int?> pin =
       List.filled(Constants.pin.pinLength, null, growable: false);
-  UpiPinBloc(this.context,this.amount)
+  UpiPinBloc(this.context, this.amount)
       : super(UpiPinHidden(
-            List.filled(Constants.pin.pinLength, null, growable: false),amount)) {
+            List.filled(Constants.pin.pinLength, null, growable: false),
+            amount)) {
     on<ToggleUpiPinEvent>((event, emit) {
+      // Toggle the visibilty of Entered Pin
       state is UpiPinHidden
-          ? emit(UpiPinVisible(pin,amount))
-          : emit(UpiPinHidden(pin,amount));
+          ? emit(UpiPinVisible(pin, amount))
+          : emit(UpiPinHidden(pin, amount));
     });
     on<KeyboardInputEvent>((event, emit) {
       state is UpiPinHidden
-          ? emit(UpiPinHidden(pin,amount))
+          ? emit(UpiPinHidden(pin, amount))
           : emit(UpiPinVisible(pin, amount));
     });
 
+// Listening for the custom keyboard events
     final CustomKeyboardBloc customKeyboardBloc =
         BlocProvider.of<CustomKeyboardBloc>(context);
     customKeyboardBloc.stream.listen((state) {
+      // Differentiating if the events are Digits or Actions
       if (state is! EraseState && state is! SubmitState) {
         if (pin.contains(null)) {
           final pinIndex = pin.indexWhere((element) => element == null);
@@ -48,6 +52,7 @@ class UpiPinBloc extends Bloc<UpiPinEvent, UpiPinState> {
           add(const KeyboardInputEvent());
         }
       } else if (state is SubmitState) {
+        // In case of Pin not completely entered, show error snackbar
         if (pin.contains(null)) {
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
             content: Text(
@@ -61,10 +66,13 @@ class UpiPinBloc extends Bloc<UpiPinEvent, UpiPinState> {
                 textColor: Constants.appColors.primaryColor),
           ));
         } else {
+          // In case of successful pin entry navigate to Acknowledgment screen
           Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (context) => TranferAcknowledgementScreen(amount: amount,)));
+                  builder: (context) => TranferAcknowledgementScreen(
+                        amount: amount,
+                      )));
         }
       }
     });

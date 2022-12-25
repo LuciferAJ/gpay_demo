@@ -14,6 +14,8 @@ class TransferHomepageBloc
       : super(const TransferHomepagePrimaryButtonState(onPressed: null)) {
     on<AmountEnteredEvent>((event, emit) {
       final double? parsedAmount = double.tryParse(event.amount ?? "");
+
+      // Navigate to Upi Pin screen if amount > 0
       if (parsedAmount != null && parsedAmount > 0) {
         emit(TransferHomepagePrimaryButtonState(onPressed: () {
           Navigator.push(

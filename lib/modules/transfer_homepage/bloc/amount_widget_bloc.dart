@@ -9,8 +9,10 @@ class AmountWidgetBloc extends Bloc<AmountWidgetEvent, AmountWidgetState> {
   AmountWidgetBloc() : super(AmountWidgetInitial(fieldWidth: 100.0)) {
     on<AmountEnteredEvent>((event, emit) {
       final textFieldLength = (event.amount ?? "").length;
+      // default size for textfield width
       const double singleFieldWidth = 100;
       double totalWidth = singleFieldWidth;
+      // Logic for textfield dynamic width
       if (textFieldLength > 1) {
         totalWidth += (28 * (textFieldLength - 1)).toDouble();
       }
